@@ -14,8 +14,12 @@ class QuestionsController extends Controller
      */
     public function index()
     {
-        $questions = Question::latest()->paginate(5);
+        //\DB::enableQueryLog(); //by default querry log is disabled, you need to enable it first
+        $questions = Question::with('user')->latest()->paginate(5);
         return view('questions.index', compact('questions'));
+        //view('questions.index', compact('questions'))->render(); //render view function returns the string content instead of just return, the view will get compiled but not render to the browser
+
+        //dd(\DB::getQueryLog()); //we can see the query log
     } 
 
     /**
